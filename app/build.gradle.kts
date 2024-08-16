@@ -91,12 +91,15 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.runtime.livedata)
-    implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.coil.compose)
     implementation(libs.androidx.tv.material)
-    implementation(libs.androidx.room.common)
-    implementation(libs.androidx.room.ktx)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.logging.interceptor)
+    implementation(libs.converter.moshi)
+
 
     //Dagger Hilt
     implementation (libs.androidx.hilt.navigation.compose)
@@ -104,13 +107,18 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     kapt(libs.hilt.android.compiler)
 
-    //Room Database
+    //Room
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.common)
+    implementation(libs.androidx.room.ktx)
     kapt(libs.androidx.room.compiler)
 
+    //paging
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.paging.compose)
+
+
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
 
     testImplementation(libs.junit)

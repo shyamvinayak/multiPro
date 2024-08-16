@@ -1,4 +1,4 @@
-package com.example.add_mul_by_kotlin_methods.RetrofitPro.model
+package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain
 
 data class Cast(
     val character: String,
