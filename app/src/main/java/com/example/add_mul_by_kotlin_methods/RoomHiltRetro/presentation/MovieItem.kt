@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -79,7 +80,7 @@ fun MovieItem(
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         text = movie.vote_average.toString(),
-                        color = Color.DarkGray,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.labelLarge.copy(fontSize = 16.sp),
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -97,6 +98,16 @@ fun MovieItem(
                  )
                  Spacer(modifier = Modifier.height(8.dp))*/
 
+            }
+            Surface(
+                shape = CircleShape,
+                modifier = Modifier
+                    .padding(6.dp)
+                    .size(32.dp)
+                    .weight(1f),
+                color = Color(0x77000000)
+            ) {
+                FavoriteButton(modifier = Modifier.padding(8.dp))
             }
         }
 

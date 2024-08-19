@@ -38,7 +38,6 @@ class MovieRemoteMediator(
             val movies = movieApi.getMovies(
                 page = loadkey
             )
-            println("MovieDetails---$movies")
             movieDatabase.withTransaction {
                 if(loadType == LoadType.REFRESH){
                     movieDatabase.dao.clearAll()

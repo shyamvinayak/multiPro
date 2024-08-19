@@ -77,7 +77,7 @@ fun Calculator(viewModel: CalculatorViewModel = viewModel()) {
             Text(
                 text = enterValue,
                 fontSize = 32.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(16.dp)
             )
 

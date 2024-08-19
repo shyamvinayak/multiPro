@@ -5,6 +5,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.room.Room
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieDao
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieDatabase
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieEntity
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieApi
@@ -58,5 +59,10 @@ object AppModule {
                 movieDb.dao.pagingSource()
             }
         )
+    }
+
+    @Provides
+    fun provideMovieDao(database: MovieDatabase): MovieDao {
+        return database.dao
     }
 }

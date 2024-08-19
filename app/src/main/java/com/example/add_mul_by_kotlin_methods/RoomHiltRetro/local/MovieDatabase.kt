@@ -9,7 +9,7 @@ import com.example.add_mul_by_kotlin_methods.RetrofitPro.Converter.CastXTypeConv
 
 @Database(
     entities = [MovieEntity::class],
-    version = 2,
+    version = 1,
     exportSchema = false,
 )
 @TypeConverters(CastXTypeConverter::class)

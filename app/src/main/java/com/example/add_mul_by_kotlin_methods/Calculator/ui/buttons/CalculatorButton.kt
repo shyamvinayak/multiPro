@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,7 +51,7 @@ fun CalculatorSingleButton(
     ) {
         Text(
             text = text, fontSize = 24.sp,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.Center)

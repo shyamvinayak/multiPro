@@ -29,13 +29,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.add_mul_by_kotlin_methods.ui.theme.Add_mul_by_kotlin_methodsTheme
+import com.example.add_mul_by_kotlin_methods.ui.theme.MariAppTheme
+
 
 // Inline Function
 inline fun inlineOperation(operation: (Int, Int) -> Int, a: Int, b: Int): Int {
@@ -70,6 +72,7 @@ fun ShowListContent(text: String, modifier: Modifier = Modifier) {
                 text = text,
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium
             )
         }
@@ -136,13 +139,13 @@ fun ListItems(
                 selected = selectedOption.value == "Lambda Function",
                 onClick = { selectedOption.value = "Lambda Function" }
             )
-            Text("Lambda Function")
+            Text("Lambda Function", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
 
             RadioButton(
                 selected = selectedOption.value == "Higher-Order Function",
                 onClick = { selectedOption.value = "Higher-Order Function" }
             )
-            Text("Higher-Order Function")
+            Text("Higher-Order Function", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
         }
         Spacer(modifier = Modifier.height(10.dp))
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
@@ -150,40 +153,40 @@ fun ListItems(
                 selected = selectedOption.value == "Infix Function",
                 onClick = { selectedOption.value = "Infix Function" }
             )
-            Text("Infix Function")
+            Text("Infix Function", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
 
             RadioButton(
                 selected = selectedOption.value == "Inline Function",
                 onClick = { selectedOption.value = "Inline Function" }
             )
-            Text("Inline Function")
+            Text("Inline Function", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
         }
         Spacer(modifier = Modifier.height(20.dp))
         Button(onClick = {
              operations[selectedOption.value]?.invoke()
 
         }) {
-            Text("Compute")
+            Text("Compute", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
         }
 
         Spacer(modifier = Modifier.height(5.dp))
         if(resultAddition.value != 0){
             if(resultAddition.value == addPro){
                 Text("The prediction for addition was correct.The output is ${resultAddition.value} and your" +
-                        "prediction is ${addPro}")
+                        "prediction is ${addPro}", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
             }else{
                 Text("The prediction for addition was incorrect.The output is ${resultAddition.value} and your" +
-                        "prediction is ${addPro}")
+                        "prediction is ${addPro}", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
             }
         }
         Spacer(modifier = Modifier.height(5.dp))
         if(resultMultiplication.value!=0){
             if(resultMultiplication.value == mulPro){
                 Text("The prediction for multiplication was correct.The output is ${resultMultiplication.value} and your" +
-                        "prediction is ${mulPro}")
+                        "prediction is ${mulPro}", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
             }else{
                 Text("The prediction for multiplication was incorrect.The output is ${resultMultiplication.value} and your" +
-                        "prediction is ${mulPro}")
+                        "prediction is ${mulPro}", style = TextStyle(color = MaterialTheme.colorScheme.onPrimary))
             }
         }
     }
@@ -197,7 +200,7 @@ fun CommonText(text: String) {
             .fillMaxWidth()
             .padding(bottom = 4.dp),
         textAlign = TextAlign.Start,
-        color = Color(0xFF020E31)
+        color = MaterialTheme.colorScheme.onPrimary
     )
 }
 
@@ -246,7 +249,7 @@ fun CommonTextField(text: MutableState<TextFieldValue>, label: String) {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    Add_mul_by_kotlin_methodsTheme {
+    MariAppTheme {
         ShowListContent("Android", Modifier.padding(all = 20.dp))
     }
 }

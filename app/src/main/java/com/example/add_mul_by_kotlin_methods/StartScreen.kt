@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.add_mul_by_kotlin_methods.Navigation.NavigationGraph
 import com.example.add_mul_by_kotlin_methods.Navigation.Screens
+import com.example.add_mul_by_kotlin_methods.ui.theme.MariAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 
@@ -32,9 +33,11 @@ class StartScreen : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            Surface(Modifier.fillMaxWidth()) {
-                Box(Modifier.safeDrawingPadding()) {
-                   NavigationGraph()
+            MariAppTheme {
+                Surface(Modifier.fillMaxWidth()) {
+                    Box(Modifier.safeDrawingPadding()) {
+                        NavigationGraph()
+                    }
                 }
             }
         }
