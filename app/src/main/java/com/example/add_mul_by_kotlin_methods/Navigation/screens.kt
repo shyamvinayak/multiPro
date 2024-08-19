@@ -8,4 +8,5 @@ sealed class Screens(val route: String) {
     object Retrofit: Screens("Retrofit_screen")
     object SingleMovies: Screens("single_movie/{movieId}")
     object MoviesMain: Screens("movies_main")
+    object WishList:Screens("wishListScreen")
 }

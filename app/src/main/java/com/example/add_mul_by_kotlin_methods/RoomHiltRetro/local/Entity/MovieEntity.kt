@@ -1,11 +1,7 @@
-package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local
+package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Cast
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Link
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Movie
 
 @Entity
 data class MovieEntity(
@@ -24,4 +20,24 @@ data class MovieEntity(
     val adult:Double,
     val casts: String,
 
+)
+@Entity
+data class WishlistEntity(
+    @PrimaryKey(autoGenerate = true) val id:Int = 0,
+    val movieId:Int,
+    val isClick:Boolean = false
+)
+
+@Entity
+data class CastEntity(
+    @PrimaryKey(autoGenerate = true) val id:Int =0,
+    val movieId:Int,
+    val name:String
+)
+
+@Entity
+data class VoteEntity(
+    @PrimaryKey val movieId:Int,
+    val voteRange:Double,
+    val voteCount:Double
 )

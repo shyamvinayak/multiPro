@@ -7,7 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.room.Room
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieDao
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieDatabase
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieEntity
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.MovieEntity
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieApi
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieRemoteMediator
 import dagger.Module
@@ -29,10 +29,10 @@ object AppModule {
     @Singleton
     fun provideMovieDatabase(@ApplicationContext context: Context): MovieDatabase {
         return Room.databaseBuilder(
-                context,
-                MovieDatabase::class.java,
-                "movie.db"
-            ).fallbackToDestructiveMigration(false)
+                    context,
+                    MovieDatabase::class.java,
+                    "movie.db"
+                ).fallbackToDestructiveMigration(false)
             .build()
     }
 

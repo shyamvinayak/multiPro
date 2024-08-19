@@ -7,7 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import coil.network.HttpException
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieDatabase
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieEntity
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.MovieEntity
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.mappers.toMovieEntity
 import okio.IOException
 
@@ -15,7 +15,7 @@ import okio.IOException
 class MovieRemoteMediator(
     private val movieDatabase: MovieDatabase,
     private val movieApi: MovieApi
-): RemoteMediator<Int,MovieEntity>() {
+): RemoteMediator<Int, MovieEntity>() {
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, MovieEntity>

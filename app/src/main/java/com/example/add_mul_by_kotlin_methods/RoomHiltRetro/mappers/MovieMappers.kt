@@ -2,7 +2,7 @@ package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.mappers
 
 
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Movie
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieEntity
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.MovieEntity
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieDto
 import com.google.gson.Gson
 

@@ -15,6 +15,8 @@ import com.example.add_mul_by_kotlin_methods.Calculator.ui.Calculator
 import com.example.add_mul_by_kotlin_methods.Home.HomeScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieDetailsScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieScreen
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.WishListScreen
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieApi
 
 @Composable
 fun NavigationGraph ( ) {
@@ -24,6 +26,7 @@ fun NavigationGraph ( ) {
         composable(Screens.Home.route) { HomeScreen("Projects", navController) }
         composable(Screens.Calculator.route) { Calculator() }
         composable(Screens.MoviesMain.route) { MovieScreen(navController) }
+        composable(Screens.WishList.route) { WishListScreen() }
         composable(
             route = Screens.SingleMovies.route,
             arguments = listOf(navArgument("movieId") { type = NavType.StringType })

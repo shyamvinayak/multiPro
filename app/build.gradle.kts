@@ -118,6 +118,9 @@ dependencies {
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.paging.compose)
 
+    //SwipeRefresh
+    implementation(libs.accompanist.swiperefresh)
+
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
 

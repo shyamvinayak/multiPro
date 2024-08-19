@@ -16,8 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.MovieEntity
 
 @Composable
 fun MovieDetailsCard(
