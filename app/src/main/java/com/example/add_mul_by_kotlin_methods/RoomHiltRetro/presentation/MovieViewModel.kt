@@ -7,11 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.compose.LazyPagingItems
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.MovieEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.paging.map
+import com.example.add_mul_by_kotlin_methods.Navigation.Screens
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Movie
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.MovieData
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.MovieDetails
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.WishlistEntity
@@ -31,14 +35,8 @@ class MovieViewModel @Inject constructor(
     private val repository: MovieRepository,
 ) : ViewModel() {
 
-    private val _movieList = MutableStateFlow<MovieData?>(null)
-    val movieList: StateFlow<MovieData?> get() = _movieList
-
     private val _movieDetails = MutableStateFlow<List<MovieEntity>?>(null)
     val movieDetails: StateFlow<List<MovieEntity>?> get() = _movieDetails
-
-    private val _wishListInsertStatus = MutableLiveData<Boolean>()
-    val wishListInsertStatus: LiveData<Boolean> get() = _wishListInsertStatus
 
     private val _wishlistStatus = mutableStateOf<Map<Int, Boolean>>(emptyMap())
     val wishlistStatus: State<Map<Int, Boolean>> get() = _wishlistStatus
@@ -52,12 +50,6 @@ class MovieViewModel @Inject constructor(
             pagingData.map { it.toMovie() }
         }.cachedIn(viewModelScope)
 
-    fun getMovieList(page:Int){
-        viewModelScope.launch {
-          movieApi.getMovies(page)
-        }
-    }
-
     fun getMovieDetails(movieId: Int) {
         viewModelScope.launch {
             val details = repository.getMovieDetails(movieId)
@@ -66,13 +58,21 @@ class MovieViewModel @Inject constructor(
 
     }
 
-    fun addToWishList(movieId: Int, isClicked: Boolean) {
+    fun addToWishList(movieId: Int,isFav:Boolean, isClicked: Boolean) {
         viewModelScope.launch {
             if(isClicked){
-                repository.addToWishList(WishlistEntity(movieId = movieId))
-                _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply { put(movieId, true) }
+                repository.addToWishList(WishlistEntity(movieId = movieId, isFavorite = isFav))
+                _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply { put(movieId, isFav) }
+
             }
             loadWishlistDetails()
+        }
+    }
+
+    fun loadWishlistDetails() {
+        viewModelScope.launch {
+            _wishlistDetails.value = repository.getWishlistDetails( )
+            _wishlistStatus.value = _wishlistDetails.value.associateBy({it.movie.movie_id},{true})
         }
     }
 
@@ -81,13 +81,6 @@ class MovieViewModel @Inject constructor(
             repository.removeFromWishList(movieId)
             _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply {remove(movieId)}
             loadWishlistDetails()
-        }
-    }
-
-    fun loadWishlistDetails() {
-        viewModelScope.launch {
-            _wishlistDetails.value = repository.getWishlistDetails()
-            _wishlistStatus.value = _wishlistDetails.value.associateBy({it.movie.movie_id},{true})
         }
     }
 

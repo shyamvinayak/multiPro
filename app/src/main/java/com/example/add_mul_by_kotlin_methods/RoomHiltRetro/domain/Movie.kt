@@ -13,5 +13,7 @@ data class Movie(
     val vote_count:Double,
     val adult:Double,
     val casts:String,
+    var isFavorite: Boolean = false,
+
 
 )

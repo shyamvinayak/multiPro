@@ -1,6 +1,5 @@
 package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local
 
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.MovieData
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.MovieDetails
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.MovieEntity
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity.WishlistEntity
@@ -23,6 +22,10 @@ class MovieRepository @Inject constructor(
     }
 
     suspend fun getWishlistDetails(): List<MovieDetails> {
-        return movieDao.getWishlistDetails()
+        return movieDao.getWishlist()
+    }
+
+    fun isFavourite(movieId: Int):Boolean{
+        return movieDao.isFavourite(movieId)
     }
 }

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -41,8 +42,9 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.add_mul_by_kotlin_methods.Navigation.Screens
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.Component.LazyVerticalGridMovies
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.Component.MovieListItem
-import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.remote.MovieApi
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.Component.MovieTopBar
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -51,25 +53,11 @@ fun MovieScreen(
     naveController: NavController,
     viewModel: MovieViewModel = hiltViewModel(),
 ) {
-    val insertStatus by viewModel.wishListInsertStatus.observeAsState()
     val movies = viewModel.moviePagingFlow.collectAsLazyPagingItems()
     val context = LocalContext.current
     val wishlistStatus by viewModel.wishlistStatus
 
-    val isRefreshing = remember { mutableStateOf(false) }
 
-    /*insertStatus?.let {
-        if (it) {
-            Toast.makeText(LocalContext.current, "Item added to wishlist!", Toast.LENGTH_LONG)
-                .show()
-        } else {
-            Toast.makeText(
-                LocalContext.current,
-                "Failed to add item to wishlist.",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-    }*/
 
     LaunchedEffect(key1 = movies.loadState) {
         if (movies.loadState.refresh is LoadState.Error) {
@@ -80,6 +68,7 @@ fun MovieScreen(
             ).show()
         }
     }
+
     Box(modifier = Modifier.fillMaxSize()) {
 
         if (movies.loadState.refresh is LoadState.Loading) {
@@ -87,72 +76,26 @@ fun MovieScreen(
                 modifier = Modifier.align(Alignment.Center)
             )
         } else {
-            SwipeRefresh(state = rememberSwipeRefreshState(isRefreshing.value),
-                onRefresh = {
-                    isRefreshing.value = true
-                    viewModel.getMovieList(1)
-                    isRefreshing.value = false
-                }) {
-
-                val listState = rememberLazyListState()
-
-                LazyColumn(
-                    state = listState,
-                    contentPadding = PaddingValues(top = 16.dp, bottom = 24.dp),
-                    modifier = Modifier.background(MaterialTheme.colorScheme.background)
-                )
-                {
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(10.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = "Movies",
-                                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(modifier = Modifier.width(10.dp))
-                            IconButton(onClick = {
-                                naveController.navigate(Screens.WishList.route)
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Favorite,
-                                    contentDescription = "fav",
-                                    tint = Color.Red
-                                )
-                            }
-
-                        }
-                    }
-                    items(movies.itemCount) {
-                        movies[it]?.let { movie ->
-                            MovieListItem(movie = movie, onItemClick = {
-                                naveController.navigate("single_movie/${movie.movie_id}")
-                            }, isInWishlist = wishlistStatus[movie.movie_id] ?: false,
-                                onWishlistClick = { isClick ->
-                                    if (isClick) {
-                                        viewModel.addToWishList(movie.movie_id, isClick)
-                                    } else {
-                                        viewModel.removeWishList(movie.movie_id)
-                                    }
-                                })
-                        }
-                    }
-                    item {
-                        if (movies.loadState.append is LoadState.Loading) {
-                            CircularProgressIndicator()
-                        }
-                    }
+            LazyVerticalGridMovies(list = movies, isFavClick = { id, isClick ->
+                if (isClick) {
+                    viewModel.addToWishList(
+                        id,
+                        isFav = true,
+                        isClicked = true
+                    )
+                } else {
+                    viewModel.removeWishList(id)
                 }
-            }
-
+            }, itemClicked = { naveController.navigate("single_movie/$it") })
+            MovieTopBar(title = "Movies", icon = Icons.Filled.Favorite, onClick = {
+                if (wishlistStatus.isNotEmpty()) {
+                    naveController.navigate(Screens.WishList.route)
+                } else {
+                    Toast.makeText(context, "No Movies Found", Toast.LENGTH_LONG).show()
+                }
+            })
 
         }
-
 
 
     }

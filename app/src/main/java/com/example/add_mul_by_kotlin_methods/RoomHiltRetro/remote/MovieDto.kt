@@ -23,6 +23,7 @@ data class MovieDto(
     val vote_count:Double,
     val adult:Double,
     val casts:List<Cast>,
-    val stringId:String?
+    val stringId:String?,
+    var isFavorite: Boolean = false,
 
 )

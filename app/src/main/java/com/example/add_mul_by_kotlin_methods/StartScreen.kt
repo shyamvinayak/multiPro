@@ -71,7 +71,7 @@ fun SplashScreen(navController: NavController) {
             .fillMaxHeight()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo),
+            painter = painterResource(id = R.drawable.ma_logo),
             modifier = Modifier.size(300.dp, 300.dp),
             contentDescription = "logo",
         )

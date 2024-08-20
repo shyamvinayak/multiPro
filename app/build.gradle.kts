@@ -123,6 +123,7 @@ dependencies {
 
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
+    implementation(libs.androidx.constraintlayout.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

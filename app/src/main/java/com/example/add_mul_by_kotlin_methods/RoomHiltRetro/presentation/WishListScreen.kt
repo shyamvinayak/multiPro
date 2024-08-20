@@ -15,26 +15,28 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.example.add_mul_by_kotlin_methods.Navigation.Screens
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.Component.MovieListItem
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.mappers.toMovie
 
 @Composable
-fun WishListScreen(viewModel: MovieViewModel = hiltViewModel()) {
+fun WishListScreen(navController: NavController, viewModel: MovieViewModel = hiltViewModel()) {
 
     LaunchedEffect(Unit) {
         viewModel.loadWishlistDetails()
     }
+
     val wishlistDetails by viewModel.wishlistDetails
     val wishlistStatus by viewModel.wishlistStatus
 
-
-    println("DataFrom DB:---${wishlistDetails.size}")
 
     Box(modifier = Modifier.fillMaxSize()) {
         val listState = rememberLazyListState()
@@ -48,10 +50,12 @@ fun WishListScreen(viewModel: MovieViewModel = hiltViewModel()) {
         )
         {
             item {
-                Surface (Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                    color = Color.Transparent){
+                Surface(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    color = Color.Transparent
+                ) {
                     Text(
                         text = "Wishlist",
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
@@ -61,16 +65,21 @@ fun WishListScreen(viewModel: MovieViewModel = hiltViewModel()) {
 
 
             }
-            items(wishlistDetails) { wishlist->
+            items(wishlistDetails) { wishlist ->
                 MovieListItem(movie = wishlist.movie.toMovie(), onItemClick = {},
-                    isInWishlist = wishlistStatus[wishlist.movie.movie_id]?:false,
+                    isInWishlist = wishlistStatus[wishlist.movie.movie_id]?:false ,
                     onWishlistClick = { isClick ->
-                    if (isClick) {
-                        viewModel.addToWishList(movieId = wishlist.movie.movie_id,true)
-                    } else {
-                        viewModel.removeWishList(wishlist.movie.movie_id)
-                    }
-                })
+                        if (isClick) {
+                            viewModel.addToWishList(
+                                wishlist.movie.movie_id,
+                                isFav = true,
+                                isClicked = true
+                            )
+                        } else {
+                            viewModel.removeWishList(wishlist.movie.movie_id)
+
+                        }
+                    })
             }
 
         }

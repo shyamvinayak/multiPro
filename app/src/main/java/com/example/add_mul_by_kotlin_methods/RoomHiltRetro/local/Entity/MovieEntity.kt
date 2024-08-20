@@ -19,13 +19,14 @@ data class MovieEntity(
     val vote_count:Double,
     val adult:Double,
     val casts: String,
+    var isFavorite: Boolean = false,
 
 )
 @Entity
 data class WishlistEntity(
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
     val movieId:Int,
-    val isClick:Boolean = false
+    val isFavorite: Boolean
 )
 
 @Entity
