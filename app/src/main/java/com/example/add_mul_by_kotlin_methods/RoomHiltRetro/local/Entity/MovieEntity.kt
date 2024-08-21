@@ -2,6 +2,7 @@ package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.local.Entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.domain.Cast
 
 @Entity
 data class MovieEntity(
@@ -18,10 +19,10 @@ data class MovieEntity(
     val vote_average:Double,
     val vote_count:Double,
     val adult:Double,
-    val casts: String,
+    val casts: List<Cast>,
     var isFavorite: Boolean = false,
 
-)
+    )
 @Entity
 data class WishlistEntity(
     @PrimaryKey(autoGenerate = true) val id:Int = 0,

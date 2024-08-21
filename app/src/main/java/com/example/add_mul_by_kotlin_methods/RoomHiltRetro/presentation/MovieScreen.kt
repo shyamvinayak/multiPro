@@ -86,7 +86,8 @@ fun MovieScreen(
                 } else {
                     viewModel.removeWishList(id)
                 }
-            }, itemClicked = { naveController.navigate("single_movie/$it") })
+            }, itemClicked = {
+                naveController.navigate("single_movie/$it") })
             MovieTopBar(title = "Movies", icon = Icons.Filled.Favorite, onClick = {
                 if (wishlistStatus.isNotEmpty()) {
                     naveController.navigate(Screens.WishList.route)

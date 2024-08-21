@@ -38,10 +38,6 @@ interface MovieDao {
     @Query("SELECT isFavorite FROM movieentity WHERE movie_id = :movieId")
     fun isFavourite(movieId: Int):Boolean //Get wishlist Boolean value
 
-    @Query("SELECT * FROM movieentity")
-    fun observeMovies():List<MovieEntity>
-
-
     @Query("""
         SELECT movieentity.*, 
                wishlistentity.movieId AS wishlistId
@@ -49,20 +45,31 @@ interface MovieDao {
          LEFT JOIN wishlistentity ON movieentity.movie_id = wishlistentity.movieId 
         WHERE wishlistentity.movieId IS NOT NULL
         """)
-    suspend fun getWishlist():List<MovieDetails>
+    suspend fun getWishlist():List<MovieDetails>// get WishList Movies
+
+    /*@Query("""
+        SELECT m.*
+        FROM movieentity m
+        WHERE EXISTS (
+         SELECT 1
+            FROM wishlistentity w
+            INNER JOIN castentity c ON m.movie_id = c.movieId
+            LEFT JOIN voteentity v ON m.movie_id = v.movieId
+        )
+    """)*/
 
     @Query("""
-        SELECT movieentity.*, 
-               wishlistentity.movieId AS wishlistId, 
-               castentity.name AS castName, 
-               voteentity.voteRange, 
-               voteentity.voteCount 
-        FROM movieentity
-        LEFT JOIN wishlistentity ON movieentity.movie_id = wishlistentity.movieId 
-        LEFT JOIN castentity ON movieentity.movie_id = castentity.movieId
-        LEFT JOIN voteentity ON movieentity.movie_id = voteentity.movieId 
-        WHERE wishlistentity.movieId IS NOT NULL
-    """)
-    suspend fun getWishlistDetails(): List<MovieDetails>
+        SELECT m.*
+        FROM movieentity m
+        WHERE EXISTS(
+        SELECT 1
+            FROM wishlistentity w
+            LEFT JOIN castentity c ON m.movie_id = c.movieId
+            LEFT JOIN voteentity v ON m.movie_id = v.movieId
+        )
+    """
+
+    )
+    suspend fun getSuggestedMovieDetails(): List<MovieDetails>  //Get Suggested Movies Based on Wishlist data-cast,vote
 
 }

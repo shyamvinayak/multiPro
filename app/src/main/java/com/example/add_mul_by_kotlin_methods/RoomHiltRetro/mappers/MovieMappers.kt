@@ -21,7 +21,7 @@ fun MovieDto.toMovieEntity(): MovieEntity {
         vote_average = vote_average,
         vote_count = vote_count,
         adult = adult,
-        casts = castsJson,
+        casts = casts,
     )
 }
 

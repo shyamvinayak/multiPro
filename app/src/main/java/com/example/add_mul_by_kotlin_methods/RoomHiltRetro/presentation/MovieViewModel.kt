@@ -1,5 +1,7 @@
 package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -27,6 +29,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
@@ -35,14 +42,17 @@ class MovieViewModel @Inject constructor(
     private val repository: MovieRepository,
 ) : ViewModel() {
 
-    private val _movieDetails = MutableStateFlow<List<MovieEntity>?>(null)
-    val movieDetails: StateFlow<List<MovieEntity>?> get() = _movieDetails
+    private val _movieDetails = MutableStateFlow<List<MovieEntity>>(emptyList())
+    val movieDetails: StateFlow<List<MovieEntity>> get() = _movieDetails
 
     private val _wishlistStatus = mutableStateOf<Map<Int, Boolean>>(emptyMap())
     val wishlistStatus: State<Map<Int, Boolean>> get() = _wishlistStatus
 
     private val _wishlistDetails = mutableStateOf<List<MovieDetails>>(emptyList())
     val wishlistDetails: State<List<MovieDetails>> get() = _wishlistDetails
+
+    private val _suggestedMovieDetails = mutableStateOf<List<MovieDetails>>(emptyList())
+    val suggestedMovieDetails: State<List<MovieDetails>> get() = _suggestedMovieDetails
 
     val moviePagingFlow = pager
         .flow
@@ -82,6 +92,20 @@ class MovieViewModel @Inject constructor(
             _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply {remove(movieId)}
             loadWishlistDetails()
         }
+    }
+
+    fun loadSuggestedMovie(){
+        viewModelScope.launch {
+            _suggestedMovieDetails.value = repository.getSuggestedMovies()
+        }
+    }
+
+    fun extractYear(dateString: String): Int {
+        val formatter = SimpleDateFormat("E, MM/dd/yyyy", Locale.US)
+        val date = formatter.parse(dateString)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        return calendar.get(Calendar.YEAR)
     }
 
 

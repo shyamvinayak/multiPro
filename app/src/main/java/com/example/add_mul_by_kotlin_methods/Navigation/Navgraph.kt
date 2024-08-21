@@ -30,9 +30,9 @@ fun NavigationGraph ( ) {
             route = Screens.SingleMovies.route,
             arguments = listOf(navArgument("movieId") { type = NavType.StringType })
         ) { backStackEntry ->
-            val movieId = backStackEntry.arguments?.getInt("movieId")
+            val movieId = backStackEntry.arguments?.getString("movieId")
             println("MovieIdFromApi:---$movieId")
-            MovieDetailsScreen(movieId?:0)
+            MovieDetailsScreen("$movieId")
         }
         composable(Screens.BasicCal.route) {
             ShowListContent(

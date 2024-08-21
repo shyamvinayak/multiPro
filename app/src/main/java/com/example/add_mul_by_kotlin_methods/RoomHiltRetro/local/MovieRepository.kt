@@ -25,6 +25,10 @@ class MovieRepository @Inject constructor(
         return movieDao.getWishlist()
     }
 
+    suspend fun getSuggestedMovies():List<MovieDetails> {
+        return movieDao.getSuggestedMovieDetails()
+    }
+
     fun isFavourite(movieId: Int):Boolean{
         return movieDao.isFavourite(movieId)
     }

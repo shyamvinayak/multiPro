@@ -45,7 +45,7 @@ fun MoviePoster (
                     .build(),
                 placeholder = painterResource(R.drawable.placeholder),
                 contentDescription = "movie poster",
-                contentScale = ContentScale.FillBounds,
+                contentScale = ContentScale.Fit,
                 modifier = Modifier.fillMaxSize()
             )
             Surface(
