@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.ir.backend.js.compile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -41,12 +43,17 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+          /*  testProguardFiles(
+                "test-proguard-rules.pro"
+            )*/
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -105,6 +112,7 @@ dependencies {
     implementation (libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.animation.graphics.android)
     kapt(libs.hilt.android.compiler)
 
     //Room
@@ -124,6 +132,7 @@ dependencies {
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.androidx.constraintlayout.compose)
+    implementation(libs.accompanist.drawablepainter)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

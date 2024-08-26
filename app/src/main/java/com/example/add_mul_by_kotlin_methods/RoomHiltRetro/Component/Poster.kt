@@ -19,10 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.sqlite.db.SupportSQLiteOpenHelper
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.add_mul_by_kotlin_methods.R
 
@@ -70,8 +68,6 @@ fun Poster(
             )
         }
 
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,7 +86,9 @@ fun Poster(
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize().padding(8.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_round_star_24),
@@ -124,7 +122,9 @@ fun Poster(
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize().padding(all = 8.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(all = 8.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_round_access_time_filled_24),
@@ -156,7 +156,9 @@ fun Poster(
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxSize().padding(8.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_round_date_range_24),

@@ -3,7 +3,6 @@ package com.example.add_mul_by_kotlin_methods.Home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -27,6 +26,8 @@ fun HomeScreen(title: String,navController: NavController) {
         GridItem(1, "Calculator", R.drawable.calculator),
         GridItem(2, "BasicMaths", R.drawable.math),
         GridItem(3, "RetrofitAPI", R.drawable.api),
+        GridItem(4, "Animation", R.drawable.cube),
+        GridItem(5, "Calender", R.drawable.calender),
     )
 
     Surface(modifier = Modifier.padding(all = 20.dp)) {
@@ -52,6 +53,12 @@ fun HomeScreen(title: String,navController: NavController) {
                     }
                     3 -> {
                         navController.navigate(Screens.MoviesMain.route)
+                    }
+                    4 -> {
+                        navController.navigate(Screens.Animation.route)
+                    }
+                    5 -> {
+                        navController.navigate(Screens.Calender.route)
                     }
                 }
             })

@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,8 +57,6 @@ fun MovieScreen(
     val movies = viewModel.moviePagingFlow.collectAsLazyPagingItems()
     val context = LocalContext.current
     val wishlistStatus by viewModel.wishlistStatus
-
-
 
     LaunchedEffect(key1 = movies.loadState) {
         if (movies.loadState.refresh is LoadState.Error) {

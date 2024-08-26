@@ -38,6 +38,20 @@ fun MoviePoster (
     ) {
         Box (modifier = Modifier
             .fillMaxSize()){
+           /* Image(
+                painter = rememberAsyncImagePainter(
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(imagePath)
+                        .apply(block = fun ImageRequest.Builder.() {
+                            crossfade(true)
+                        }).build()
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxSize()
+            )*/
+
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imagePath)

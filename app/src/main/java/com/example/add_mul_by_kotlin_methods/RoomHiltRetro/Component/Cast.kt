@@ -42,7 +42,7 @@ fun Cast(
             modifier = Modifier.padding(top = 16.dp, start = 15.dp),
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onPrimary
         )
         LazyRow(
             contentPadding = PaddingValues(
@@ -60,20 +60,6 @@ fun Cast(
                         .fillMaxSize()
                         .padding(all = 10.dp)
                 ) {
-                    /*  Image(
-                          modifier = Modifier
-                              .size(100.dp, 100.dp)
-                              .clip(CircleShape)
-                              .border(
-                                  width = 4.dp,
-                                  color = Color.Gray,
-                                  shape = CircleShape
-                              ),
-                          painter = rememberAsyncImagePainter(
-                              model = cast.profile_path),
-                          contentDescription = null,
-                          contentScale = ContentScale.Crop
-                      )*/
 
                     AsyncImage(
                         model = cast.profile_path,
@@ -92,7 +78,7 @@ fun Cast(
                         fontSize = 14.sp,
                         overflow = TextOverflow.Ellipsis,
                         fontWeight = FontWeight.W600,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             }

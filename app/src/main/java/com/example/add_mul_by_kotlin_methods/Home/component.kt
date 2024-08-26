@@ -1,5 +1,11 @@
 package com.example.add_mul_by_kotlin_methods.Home
 
+import android.graphics.drawable.AnimatedVectorDrawable
+import android.graphics.drawable.Drawable
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
+import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -16,8 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.example.add_mul_by_kotlin_methods.R
 
 @Composable
 fun GridViewScreen(gridItems: List<GridItem>, onItemClick: (GridItem) -> Unit) {
@@ -31,6 +40,14 @@ fun GridViewScreen(gridItems: List<GridItem>, onItemClick: (GridItem) -> Unit) {
 
 @Composable
 fun GridItemView(gridItem: GridItem, onItemClick: (GridItem) -> Unit) {
+
+    val painter = rememberAsyncImagePainter(
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(gridItem.icon)
+            .crossfade(true)
+            .build()
+    )
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -44,14 +61,22 @@ fun GridItemView(gridItem: GridItem, onItemClick: (GridItem) -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = gridItem.icon),
-                contentDescription = gridItem.title,
-                modifier = Modifier.size(48.dp)
+                painter = painter,
+                contentDescription = "GIF loading",
+                modifier = Modifier
+                    .size(48.dp)
             )
+
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = gridItem.title, style = MaterialTheme.typography.bodyLarge)
         }
     }
+}
+
+
+
+fun isGif(fileName: String): Boolean {
+    return fileName.endsWith(".gif", ignoreCase = true)
 }
 
 

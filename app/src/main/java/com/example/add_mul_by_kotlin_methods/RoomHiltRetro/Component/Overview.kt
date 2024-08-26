@@ -1,10 +1,12 @@
 package com.example.add_mul_by_kotlin_methods.RoomHiltRetro.Component
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,14 +28,14 @@ fun Overview(
             modifier = Modifier.padding(top = 16.dp),
             fontSize = 14.sp,
             fontWeight = FontWeight.W600,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onPrimary
         )
         Text(
             text = overview,
             modifier = Modifier.padding(top = 8.dp),
             fontSize = 14.sp,
             lineHeight = 25.sp,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onPrimary
         )
     }
 }

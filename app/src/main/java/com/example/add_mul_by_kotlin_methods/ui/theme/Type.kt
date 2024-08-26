@@ -48,7 +48,7 @@ val Typography = Typography(
     */
 )*/
 
-val typography = Typography(
+val Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = Grotesk,
         fontWeight = FontWeight.W600,

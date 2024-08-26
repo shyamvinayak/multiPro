@@ -42,7 +42,7 @@ fun MariAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composabl
 
     MaterialTheme(
         colorScheme = colors,
-        typography = typography,
+        typography = Typography,
         shapes = Shapes,
         content = content
     )

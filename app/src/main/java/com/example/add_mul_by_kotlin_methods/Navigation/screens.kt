@@ -5,8 +5,9 @@ sealed class Screens(val route: String) {
     object Home: Screens("home_screen")
     object Calculator: Screens("Calculator_screen")
     object BasicCal: Screens("BasicMath_screen")
-    object Retrofit: Screens("Retrofit_screen")
     object SingleMovies: Screens("single_movie/{movieId}")
     object MoviesMain: Screens("movies_main")
     object WishList:Screens("wishListScreen")
+    object Animation:Screens("AnimationScreen")
+    object Calender:Screens("CalenderScreen")
 }
