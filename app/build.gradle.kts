@@ -129,6 +129,8 @@ dependencies {
     //SwipeRefresh
     implementation(libs.accompanist.swiperefresh)
 
+    //accompanist-permission
+    implementation(libs.accompanist.permissions)
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.androidx.constraintlayout.compose)

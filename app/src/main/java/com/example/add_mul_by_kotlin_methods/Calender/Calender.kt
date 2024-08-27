@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -187,25 +189,48 @@ val publicHolidays = listOf(
     )
 
 @Composable
-fun AllYearCalender() {
+fun CalendarApp() {
     val calendar = Calendar.getInstance()
+    var selectedYear by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+
+    AllYearCalender(year = selectedYear, onYearSelected = { year ->
+        selectedYear = year
+    })
+}
+
+@Composable
+fun AllYearCalender(year: Int, onYearSelected: (Int) -> Unit) {
+    val startYear = 1990
+    val endYear = 9999
+    val yearsRange = startYear..endYear
+    var showYearDialog by remember { mutableStateOf(false) }
     var selectedHoliday by remember { mutableStateOf<Holiday?>(null) }
+
+
     LazyColumn {
         item {
             CalenderHeader()
         }
         items((0..11).toList()) {
-            Calender(year = calendar.get(Calendar.YEAR),
+            Calender(year = year,
                 month = it,
                 onHolidayClick = { holiday ->
                     selectedHoliday = holiday
-                })
+                },
+                onYearClick = {
+                    showYearDialog = true
+                }
+            )
             HorizontalDivider(
                 color = if (it != 11) Color.DarkGray else Color.Transparent,
                 thickness = 1.dp,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp)
             )
         }
+    }
+
+    yearsRange.forEach { year ->
+        println(year)
     }
 
     selectedHoliday?.let {
@@ -230,11 +255,55 @@ fun AllYearCalender() {
             })
     }
 
+    if (showYearDialog) {
+        AlertDialog(
+            title = {
+                Text(
+                    "Pick Year",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            text = {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(3),
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    val years = yearsRange.toList()
+                         items(years){year->
+                             Text(
+                                 text = year.toString(),
+                                 modifier = Modifier
+                                     .fillMaxWidth()
+                                     .clickable {
+                                         onYearSelected(year)
+                                         showYearDialog = false
+                                     }
+                                     .padding(16.dp),
+                                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                                 textAlign = TextAlign.Center
+                             )
+                         }
+                }
+            },
+            onDismissRequest = {
+                showYearDialog = false
+            }, confirmButton = {
+                TextButton(onClick = {
+                    showYearDialog = false
+                }) {
+                    Text("Ok")
+                }
+            })
+    }
+
+
 }
 
 
 @Composable
-fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit) {
+fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit, onYearClick: () -> Unit) {
 
     val calendar = Calendar.getInstance().apply {
         set(Calendar.YEAR, year)
@@ -253,7 +322,9 @@ fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit) {
     ) {
 
 
-        Row {
+        Row(modifier = Modifier.clickable {
+            onYearClick()
+        }) {
             Icon(
                 imageVector = Icons.Filled.DateRange,
                 contentDescription = "calenderHeader",
@@ -305,21 +376,21 @@ fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit) {
                                 publicHolidays.any { it.month == month + 1 && it.day == day }
                             val holiday =
                                 publicHolidays.find { it.month == month + 1 && it.day == day }
-                            val circleColor = if (isHoliday) Color.Red else Color.Transparent
+                            val circleColor = /*if (isHoliday) Color.Red else*/ Color.Transparent
                             val color =
-                                if (isHoliday) Color.White else MaterialTheme.colorScheme.onBackground
+                                /*if (isHoliday) Color.White else*/ MaterialTheme.colorScheme.onBackground
                             Text(
                                 text = "$day",
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier
                                     .weight(1f)
                                     .padding(4.dp)
-                                    .drawBehind {
+                                    /*.drawBehind {
                                         drawCircle(
                                             color = circleColor,
-                                            radius = this.size.minDimension
+                                            radius = this.size.component2()
                                         )
-                                    }
+                                    }*/
                                     .clickable {
                                         holiday?.let {
                                             onHolidayClick(it)
@@ -327,7 +398,7 @@ fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit) {
                                     },
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = color,
-                                fontWeight = if (isHoliday) FontWeight.Bold else FontWeight.Normal
+                                fontWeight = /*if (isHoliday) FontWeight.Bold else*/ FontWeight.Normal
                             )
                         } else {
                             Spacer(modifier = Modifier.weight(1f)) // Spacer for empty cells
@@ -389,6 +460,5 @@ fun Calender(year: Int, month: Int, onHolidayClick: (Holiday) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCalendarView() {
-    // Calender(year = 2024, month = 8)
-    AllYearCalender()
+    CalendarApp()
 }

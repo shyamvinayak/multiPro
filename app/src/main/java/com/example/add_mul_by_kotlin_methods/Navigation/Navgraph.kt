@@ -20,8 +20,11 @@ import com.example.add_mul_by_kotlin_methods.SplashScreen
 import com.example.add_mul_by_kotlin_methods.BasicMath.ShowListContent
 import com.example.add_mul_by_kotlin_methods.Calculator.ui.Calculator
 import com.example.add_mul_by_kotlin_methods.Calender.AllYearCalender
+import com.example.add_mul_by_kotlin_methods.Calender.CalendarApp
 import com.example.add_mul_by_kotlin_methods.Calender.Calender
 import com.example.add_mul_by_kotlin_methods.Home.HomeScreen
+import com.example.add_mul_by_kotlin_methods.PDFGen.PDFGenerator
+import com.example.add_mul_by_kotlin_methods.PhotoPic.PhotoPic
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieDetailsScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.WishListScreen
@@ -123,7 +126,35 @@ fun NavigationGraph() {
                     AnimatedContentTransitionScope.SlideDirection.End, tween(700)
                 )
             }) {
-            AllYearCalender() /*Calender(year = calendar.get(Calendar.YEAR), month = calendar.get(Calendar.MONTH))*/ }
+            CalendarApp() }
+        composable(Screens.PDFGen.route,
+            enterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+                )
+            },
+            exitTransition = {
+                return@composable shrinkOut (tween(700) )
+            },
+            popExitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+                )
+            }) { PDFGenerator() }
+        composable(Screens.PhotoPic.route,
+            enterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+                )
+            },
+            exitTransition = {
+                return@composable shrinkOut (tween(700) )
+            },
+            popExitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+                )
+            }) {  PhotoPic() }
         composable(
             route = Screens.SingleMovies.route,
             arguments = listOf(navArgument("movieId") { type = NavType.StringType }),

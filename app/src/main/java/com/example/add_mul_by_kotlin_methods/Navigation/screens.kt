@@ -10,4 +10,6 @@ sealed class Screens(val route: String) {
     object WishList:Screens("wishListScreen")
     object Animation:Screens("AnimationScreen")
     object Calender:Screens("CalenderScreen")
+    object PDFGen:Screens("PDFGeneratorScreen")
+    object PhotoPic:Screens("PhotoPicScreen")
 }

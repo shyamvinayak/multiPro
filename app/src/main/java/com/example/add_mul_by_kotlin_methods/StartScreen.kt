@@ -26,6 +26,7 @@ import com.example.add_mul_by_kotlin_methods.Navigation.Screens
 import com.example.add_mul_by_kotlin_methods.ui.theme.MariAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import java.io.File
 
 @AndroidEntryPoint
 class StartScreen : ComponentActivity() {
@@ -42,6 +43,8 @@ class StartScreen : ComponentActivity() {
             }
         }
     }
+
+
 }
 
 @Composable

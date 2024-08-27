@@ -1,5 +1,6 @@
 package com.example.add_mul_by_kotlin_methods.Calender
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,8 @@ fun CalenderHeader (){
 
     Row (modifier = Modifier
         .fillMaxWidth()
-        .padding(10.dp)){
+        .padding(10.dp),
+        ){
         Text(
             text = getCurrentDate(),//Saturday 20, May 2023
             color = MaterialTheme.colorScheme.onPrimary,
@@ -26,21 +28,6 @@ fun CalenderHeader (){
                 .weight(1f)
                 .align(Alignment.CenterVertically)
         )
-
-      /*  IconButton(onClick = { }) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowLeft,
-                contentDescription = "Previous",
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-        }
-        IconButton(onClick = { }) {
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowRight,
-                contentDescription = "Next",
-                tint = MaterialTheme.colorScheme.onPrimary
-            )
-        }*/
     }
 
 }

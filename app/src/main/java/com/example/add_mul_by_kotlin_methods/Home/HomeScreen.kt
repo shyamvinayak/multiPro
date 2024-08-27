@@ -28,6 +28,8 @@ fun HomeScreen(title: String,navController: NavController) {
         GridItem(3, "RetrofitAPI", R.drawable.api),
         GridItem(4, "Animation", R.drawable.cube),
         GridItem(5, "Calender", R.drawable.calender),
+        GridItem(6, "PDFGen", R.drawable.pdf),
+        GridItem(7, "PicSelector", R.drawable.picture),
     )
 
     Surface(modifier = Modifier.padding(all = 20.dp)) {
@@ -59,6 +61,12 @@ fun HomeScreen(title: String,navController: NavController) {
                     }
                     5 -> {
                         navController.navigate(Screens.Calender.route)
+                    }
+                    6 -> {
+                        navController.navigate(Screens.PDFGen.route)
+                    }
+                    7 -> {
+                        navController.navigate(Screens.PhotoPic.route)
                     }
                 }
             })
