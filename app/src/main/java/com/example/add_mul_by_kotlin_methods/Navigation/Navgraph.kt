@@ -24,7 +24,7 @@ import com.example.add_mul_by_kotlin_methods.Calender.CalendarApp
 import com.example.add_mul_by_kotlin_methods.Calender.Calender
 import com.example.add_mul_by_kotlin_methods.Home.HomeScreen
 import com.example.add_mul_by_kotlin_methods.PDFGen.PDFGenerator
-import com.example.add_mul_by_kotlin_methods.PhotoPic.PhotoPic
+import com.example.add_mul_by_kotlin_methods.PhotoPic.ImageEditor
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieDetailsScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.WishListScreen
@@ -154,7 +154,7 @@ fun NavigationGraph() {
                 return@composable slideOutOfContainer(
                     AnimatedContentTransitionScope.SlideDirection.End, tween(700)
                 )
-            }) {  PhotoPic() }
+            }) {  ImageEditor() }
         composable(
             route = Screens.SingleMovies.route,
             arguments = listOf(navArgument("movieId") { type = NavType.StringType }),

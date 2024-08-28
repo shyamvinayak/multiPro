@@ -40,6 +40,8 @@ roomCommon = "2.6.1"
 roomKtx = "2.6.1"
 roomCommonJvm = "2.7.0-alpha06"
 animationGraphicsAndroid = "1.6.8"
+media3Effect = "1.4.0"
+ucrop = "2.2.6"
 
 [libraries]
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanistDrawablepainter" }
@@ -86,6 +88,8 @@ androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = 
 androidx-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
 retrofit2-kotlin-coroutines-adapter = { module = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter", version.ref = "retrofit2KotlinCoroutinesAdapter" }
 androidx-animation-graphics-android = { group = "androidx.compose.animation", name = "animation-graphics-android", version.ref = "animationGraphicsAndroid" }
+androidx-media3-effect = { group = "androidx.media3", name = "media3-effect", version.ref = "media3Effect" }
+ucrop = { module = "com.github.yalantis:ucrop", version.ref = "ucrop" }
 
 
 [plugins]

@@ -113,6 +113,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.animation.graphics.android)
+    implementation(libs.androidx.media3.effect)
     kapt(libs.hilt.android.compiler)
 
     //Room
@@ -131,6 +132,9 @@ dependencies {
 
     //accompanist-permission
     implementation(libs.accompanist.permissions)
+
+    // Image cropping library
+    implementation (libs.ucrop)
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.androidx.constraintlayout.compose)
