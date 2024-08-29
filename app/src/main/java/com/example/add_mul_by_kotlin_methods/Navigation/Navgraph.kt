@@ -19,12 +19,10 @@ import com.example.add_mul_by_kotlin_methods.Animation.Presentation.AnimationScr
 import com.example.add_mul_by_kotlin_methods.SplashScreen
 import com.example.add_mul_by_kotlin_methods.BasicMath.ShowListContent
 import com.example.add_mul_by_kotlin_methods.Calculator.ui.Calculator
-import com.example.add_mul_by_kotlin_methods.Calender.AllYearCalender
 import com.example.add_mul_by_kotlin_methods.Calender.CalendarApp
-import com.example.add_mul_by_kotlin_methods.Calender.Calender
 import com.example.add_mul_by_kotlin_methods.Home.HomeScreen
 import com.example.add_mul_by_kotlin_methods.PDFGen.PDFGenerator
-import com.example.add_mul_by_kotlin_methods.PhotoPic.ImageEditor
+import com.example.add_mul_by_kotlin_methods.PhotoPic.Presentation.ImageEditor
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieDetailsScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.MovieScreen
 import com.example.add_mul_by_kotlin_methods.RoomHiltRetro.presentation.WishListScreen

@@ -1,17 +1,13 @@
-package com.example.add_mul_by_kotlin_methods.PhotoPic
+package com.example.add_mul_by_kotlin_methods.PhotoPic.Component
 
 import android.Manifest
-import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun RequestPermissions() {
-    val context = LocalContext.current
-    val activity = context as Activity
     val permissionsLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->

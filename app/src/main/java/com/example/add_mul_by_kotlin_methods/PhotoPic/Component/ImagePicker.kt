@@ -1,4 +1,4 @@
-package com.example.add_mul_by_kotlin_methods.PhotoPic
+package com.example.add_mul_by_kotlin_methods.PhotoPic.Component
 
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult

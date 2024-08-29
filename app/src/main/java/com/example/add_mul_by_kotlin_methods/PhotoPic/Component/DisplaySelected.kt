@@ -1,4 +1,4 @@
-package com.example.add_mul_by_kotlin_methods.PhotoPic
+package com.example.add_mul_by_kotlin_methods.PhotoPic.Component
 
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -12,21 +12,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
+import com.example.add_mul_by_kotlin_methods.R
 
 @Composable
 fun ImageDisplay(
     imageUri: Uri?,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
-    val painter = rememberImagePainter(
-        data = imageUri,
-        builder = {
-            crossfade(true)
-            error(com.example.add_mul_by_kotlin_methods.R.drawable.ic_launcher_foreground) // Placeholder image on error
-        }
-    )
+    val painter = // Placeholder image on error
+        rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current).data(data = imageUri)
+                .apply(block = fun ImageRequest.Builder.() {
+                    crossfade(true)
+                    error(R.drawable.ic_launcher_foreground) // Placeholder image on error
+                }).build()
+        )
 
     Box(
         modifier = modifier
@@ -37,7 +39,9 @@ fun ImageDisplay(
             painter = painter,
             contentDescription = "Selected Image",
             contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxWidth().height(200.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
         )
     }
 
