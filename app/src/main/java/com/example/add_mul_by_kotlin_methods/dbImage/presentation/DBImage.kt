@@ -44,9 +44,13 @@ fun DBImage(viewModel: DBViewModel = hiltViewModel()) {
 
     val galleryLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            pickedImageUri = uri
-            val byteArray = viewModel.readBytes(context, pickedImageUri!!)
-            viewModel.addImage(ImageEntity(imageData = byteArray!!))
+           try {
+               pickedImageUri = uri
+               viewModel.readBytes(context, pickedImageUri!!)
+               viewModel.addImage(context = context,ImageEntity(imageData = pickedImageUri.toString()))
+           }catch (e:Exception){
+               println("InsertError:----$e")
+           }
         }
 
 
@@ -79,26 +83,29 @@ fun DBImage(viewModel: DBViewModel = hiltViewModel()) {
 
                 }
             )
-
         }
         items(images.size) { index ->
-            val bitmap = viewModel.byteArrayToBitmap(images[index].imageData)
+            /*val uri = Uri.parse(images[index].imageData)
+            val bytArrayImage = viewModel.readBytes(context, uri)
+            val bitmap = viewModel.byteArrayToBitmap(bytArrayImage!!)*/
+            //val bitmap = viewModel.decodeFromBase64(images[index].imageData)
+            val base64ImageData = images[index].imageData
+            val byteArray = viewModel.decodeFromBase64(base64ImageData)
+            val bitmap = viewModel.byteArrayToBitmap(byteArray)
             bitmap?.let {
                 ImageItem(
                     context = context,
                     imageBitMap = it,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                        .height(200.dp),
+                        .fillMaxSize()
+                        .padding(8.dp),
                     onRemove = {
                         viewModel.deleteImage(images[index].id)
                     }
                 )
             } ?: run {
-                Text(text = "No image available")
+                Text(text = "No image available", color = MaterialTheme.colorScheme.onBackground)
             }
-
 
         }
 

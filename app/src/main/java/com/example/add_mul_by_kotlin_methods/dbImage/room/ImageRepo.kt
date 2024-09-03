@@ -10,4 +10,11 @@ class ImageRepo @Inject constructor(private val imageDao: ImageDao) {
     suspend fun insertImage(image: ImageEntity) = imageDao.insertImage(image)
 
     fun deleteImage(imageId: Int) = imageDao.deleteImage(imageId)
+
+    /*fun getImageData(id: Int): LiveData<ByteArray> {
+        return Transformations.map(imageDao.getImageDataById(id)) { base64Data ->
+            decodeFromBase64(base64Data)
+        }
+    }*/
+
 }

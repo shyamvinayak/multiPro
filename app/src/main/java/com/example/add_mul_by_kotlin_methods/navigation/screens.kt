@@ -13,4 +13,5 @@ sealed class Screens(val route: String) {
     object PDFGen:Screens("PDFGeneratorScreen")
     object PhotoPic:Screens("PhotoPicScreen")
     object DBImage:Screens("DBImage")
+    object Coroutines:Screens("Coroutine")
 }

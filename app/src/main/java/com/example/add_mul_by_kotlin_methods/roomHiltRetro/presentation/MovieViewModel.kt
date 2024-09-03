@@ -1,15 +1,20 @@
 package com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.Pager
 import androidx.paging.cachedIn
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.MovieEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.paging.map
+import com.example.add_mul_by_kotlin_methods.dbImage.room.ImageEntity
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.domain.MovieDetails
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.WishlistEntity
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.MovieRepository
@@ -20,7 +25,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import kotlinx.coroutines.delay
 import java.util.Locale
+import java.time.Duration
+import java.time.Duration.ofMinutes
+import java.time.Duration.ofSeconds
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
@@ -40,11 +49,24 @@ class MovieViewModel @Inject constructor(
     private val _suggestedMovieDetails = mutableStateOf<List<MovieDetails>>(emptyList())
     val suggestedMovieDetails: State<List<MovieDetails>> get() = _suggestedMovieDetails
 
+    private val _currentMovie = MutableStateFlow<List<MovieEntity>>(emptyList())
+    val currentMovie: StateFlow<List<MovieEntity>> get() = _currentMovie
+
+
+    init {
+        viewModelScope.launch {
+            _currentMovie.value = repository.getAllMoviesNoPagination()
+        }
+    }
+
     val moviePagingFlow = pager
         .flow
         .map { pagingData ->
-            pagingData.map { it.toMovie() }
+            pagingData.map {
+                it.toMovie()
+            }
         }.cachedIn(viewModelScope)
+
 
     fun getMovieDetails(movieId: Int) {
         viewModelScope.launch {
@@ -95,6 +117,22 @@ class MovieViewModel @Inject constructor(
         }
         return calendar.get(Calendar.YEAR)
     }
+
+    var currentIndex = 0
+        set(value){
+            field = value
+            viewModelScope.launch {
+                delay(10_000)
+                _currentMovie.value = repository.getAllMoviesNoPagination()
+                delay(60_000)
+                _currentMovie.value =  repository.getAllMoviesNoPagination()
+                delay(300_000)
+                _currentMovie.value =  repository.getAllMoviesNoPagination()
+            }
+        }
+
+
+
 
 
 }

@@ -59,11 +59,12 @@ fun MovieScreen(
             }, itemClicked = {
                 naveController.navigate("single_movie/$it") })
             MovieTopBar(title = "Movies", icon = Icons.Filled.Favorite, onClick = {
-                if (wishlistStatus.isNotEmpty()) {
+                naveController.navigate(Screens.Coroutines.route)
+                /*if (wishlistStatus.isNotEmpty()) {
                     naveController.navigate(Screens.WishList.route)
                 } else {
                     Toast.makeText(context, "No Movies Found", Toast.LENGTH_LONG).show()
-                }
+                }*/
             })
 
         }

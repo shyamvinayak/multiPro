@@ -1,6 +1,8 @@
 package com.example.add_mul_by_kotlin_methods.navigation
 
-import androidx.activity.compose.BackHandler
+import TestCoroutine
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -9,6 +11,7 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -28,6 +31,7 @@ import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.MovieDet
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.MovieScreen
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.WishListScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph() {
     val navController = rememberNavController()
@@ -178,6 +182,22 @@ fun NavigationGraph() {
                     AnimatedContentTransitionScope.SlideDirection.End, tween(700)
                 )
             }) {  DBImage() }
+
+        composable(Screens.Coroutines.route,
+            enterTransition = {
+                return@composable slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Start, tween(700)
+                )
+            },
+            exitTransition = {
+                return@composable shrinkOut (tween(700) )
+            },
+            popExitTransition = {
+                return@composable slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.End, tween(700)
+                )
+            }) {  TestCoroutine(navController) }
+
 
         composable(
             route = Screens.SingleMovies.route,

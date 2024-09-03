@@ -17,6 +17,10 @@ class MovieRepository @Inject constructor(
         return movieDao.loadSingleMovie(movieId)
     }
 
+    suspend fun getAllMoviesNoPagination():List<MovieEntity>{
+        return  movieDao.getAllMovies()
+    }
+
     suspend fun removeFromWishList(movieId: Int){
         movieDao.deleteFromWishList(movieId)
     }

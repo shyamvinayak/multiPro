@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,14 +23,27 @@ class DBViewModel @Inject constructor(
 
     val images: LiveData<List<ImageEntity>> = repository.getAllImages()
 
-    fun addImage(image: ImageEntity) {
+    fun addImage(context: Context,image: ImageEntity) {
         viewModelScope.launch {
            try {
-               repository.insertImage(image)
+               val uri = Uri.parse(image.imageData)
+               val byteArrayData = readBytes(context = context,uri)
+               val base64ImageData = encodeToBase64(byteArrayData!!)
+               val imageEntity = ImageEntity(imageData = base64ImageData)
+               repository.insertImage(imageEntity)
            }catch (e:Exception){
                println("Insert Error:--$e")
            }
         }
+    }
+
+
+    fun encodeToBase64(data: ByteArray): String {
+        return Base64.encodeToString(data, Base64.DEFAULT)
+    }
+
+    fun decodeFromBase64(base64Data: String): ByteArray {
+        return Base64.decode(base64Data, Base64.DEFAULT)
     }
 
     fun readBytes(context: Context, uri: Uri): ByteArray? =

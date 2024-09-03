@@ -8,6 +8,9 @@ import androidx.room.PrimaryKey
 data class ImageEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    @ColumnInfo(name = "imageData", typeAffinity = ColumnInfo.BLOB)
-    val imageData : ByteArray
+    @ColumnInfo(name = "imageData")
+    val imageData: String
+
+    /*@ColumnInfo(name = "imageData", typeAffinity = ColumnInfo.BLOB)
+    val imageData : ByteArray*/
 )

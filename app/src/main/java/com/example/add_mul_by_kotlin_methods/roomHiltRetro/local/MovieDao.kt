@@ -16,6 +16,9 @@ interface MovieDao {
     suspend fun upsertAll(movies:List<MovieEntity>) //Update and Insert Movie Details
 
     @Query("SELECT * FROM movieentity")
+    suspend fun getAllMovies():List<MovieEntity> //Get All Movies
+
+    @Query("SELECT * FROM movieentity")
     fun pagingSource():PagingSource<Int, MovieEntity> //Show Movie List by Infinite Scroll
 
     @Query("DELETE FROM movieentity")

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -19,6 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        manifestPlaceholders["appIcon"] = "@drawable/ma_logo"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -40,19 +39,38 @@ android {
         tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
             dependsOn("createSchemaDir")
         }
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
     buildTypes {
-        release {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+            isDebuggable = true
+        }
+        getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-          /*  testProguardFiles(
-                "test-proguard-rules.pro"
-            )*/
         }
+        /*release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+        }*/
+
+       /* create("staging") {
+            initWith(getByName("debug"))
+            manifestPlaceholders["hostName"] = "internal.example.com"
+            applicationIdSuffix = ".debugStaging"
+        }*/
 
     }
     compileOptions {
@@ -74,10 +92,28 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
     room {
         schemaDirectory("$projectDir/schemas")
     }
+    flavorDimensions += "default"
+    productFlavors {
+        create("demo") {
+            applicationIdSuffix = ".debug"
+            applicationId = "com.example.ma_demo"
+            versionNameSuffix = "-demo"
+            resValue("string","app_name","MA-DEV")
+            manifestPlaceholders["appIcon"] = "@drawable/ma_logo"
+        }
+        create("pro") {
+            applicationIdSuffix = ".full"
+            applicationId = "com.example.ma_pro"
+            versionNameSuffix = "-full"
+            resValue("string","app_name","MA-PRO")
+            manifestPlaceholders["appIcon"] = "@drawable/logo"
+        }
+    }
+
+
 }
 
 
@@ -109,7 +145,7 @@ dependencies {
 
 
     //Dagger Hilt
-    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.animation.graphics.android)
@@ -134,7 +170,10 @@ dependencies {
     implementation(libs.accompanist.permissions)
 
     // Image cropping library
-    implementation (libs.ucrop)
+    implementation(libs.ucrop)
+
+    //Coroutine
+    implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.androidx.constraintlayout.compose)

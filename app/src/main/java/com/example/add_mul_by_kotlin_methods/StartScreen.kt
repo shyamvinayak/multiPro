@@ -1,6 +1,7 @@
 package com.example.add_mul_by_kotlin_methods
 
 import android.os.Bundle
+import android.view.WindowManager
 import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -32,6 +33,10 @@ class StartScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
         setContent {
             MariAppTheme {
                 Surface(Modifier.fillMaxWidth()) {

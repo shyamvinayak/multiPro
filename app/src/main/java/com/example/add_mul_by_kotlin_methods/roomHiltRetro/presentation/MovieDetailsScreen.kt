@@ -26,6 +26,8 @@ import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.Poster
 @Composable
 fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewModel()) {
 
+    println("MovieId:---$movieId")
+
     val movieDetails by viewModel.movieDetails.collectAsState()
     LaunchedEffect(movieId) {
         viewModel.getMovieDetails(movieId.toInt())
