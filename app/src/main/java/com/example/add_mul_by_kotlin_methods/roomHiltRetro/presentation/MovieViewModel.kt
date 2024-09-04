@@ -52,6 +52,9 @@ class MovieViewModel @Inject constructor(
     private val _currentMovie = MutableStateFlow<List<MovieEntity>>(emptyList())
     val currentMovie: StateFlow<List<MovieEntity>> get() = _currentMovie
 
+    private val _searchDetails = MutableStateFlow<List<MovieEntity>>(emptyList())
+    val searchDetails: StateFlow<List<MovieEntity>> get() = _searchDetails
+
 
     init {
         viewModelScope.launch {
@@ -76,11 +79,12 @@ class MovieViewModel @Inject constructor(
 
     }
 
-    fun addToWishList(movieId: Int,isFav:Boolean, isClicked: Boolean) {
+    fun addToWishList(movieId: Int, isFav: Boolean, isClicked: Boolean) {
         viewModelScope.launch {
-            if(isClicked){
+            if (isClicked) {
                 repository.addToWishList(WishlistEntity(movieId = movieId, isFavorite = isFav))
-                _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply { put(movieId, isFav) }
+                _wishlistStatus.value =
+                    _wishlistStatus.value.toMutableMap().apply { put(movieId, isFav) }
 
             }
             loadWishlistDetails()
@@ -89,20 +93,21 @@ class MovieViewModel @Inject constructor(
 
     fun loadWishlistDetails() {
         viewModelScope.launch {
-            _wishlistDetails.value = repository.getWishlistDetails( )
-            _wishlistStatus.value = _wishlistDetails.value.associateBy({it.movie.movie_id},{true})
+            _wishlistDetails.value = repository.getWishlistDetails()
+            _wishlistStatus.value =
+                _wishlistDetails.value.associateBy({ it.movie.movie_id }, { true })
         }
     }
 
     fun removeWishList(movieId: Int) {
         viewModelScope.launch {
             repository.removeFromWishList(movieId)
-            _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply {remove(movieId)}
+            _wishlistStatus.value = _wishlistStatus.value.toMutableMap().apply { remove(movieId) }
             loadWishlistDetails()
         }
     }
 
-    fun loadSuggestedMovie(){
+    fun loadSuggestedMovie() {
         viewModelScope.launch {
             _suggestedMovieDetails.value = repository.getSuggestedMovies()
         }
@@ -118,21 +123,35 @@ class MovieViewModel @Inject constructor(
         return calendar.get(Calendar.YEAR)
     }
 
+    fun searchMovies(query: String) {
+        viewModelScope.launch {
+            try {
+                _searchDetails.value = repository.searchMovies(query)
+                println("Search Items length:---${searchDetails.value.size}")
+            } catch (e: Exception) {
+                println("Search Error:---$e")
+            }
+
+
+        }
+    }
+
+    fun clearSearchResults() {
+        _searchDetails.value = emptyList()
+    }
+
     var currentIndex = 0
-        set(value){
+        set(value) {
             field = value
             viewModelScope.launch {
                 delay(10_000)
                 _currentMovie.value = repository.getAllMoviesNoPagination()
                 delay(60_000)
-                _currentMovie.value =  repository.getAllMoviesNoPagination()
+                _currentMovie.value = repository.getAllMoviesNoPagination()
                 delay(300_000)
-                _currentMovie.value =  repository.getAllMoviesNoPagination()
+                _currentMovie.value = repository.getAllMoviesNoPagination()
             }
         }
-
-
-
 
 
 }

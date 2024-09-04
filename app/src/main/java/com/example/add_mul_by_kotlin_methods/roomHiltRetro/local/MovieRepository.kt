@@ -1,5 +1,6 @@
 package com.example.add_mul_by_kotlin_methods.roomHiltRetro.local
 
+import androidx.room.Query
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.domain.MovieDetails
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.MovieEntity
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.WishlistEntity
@@ -31,6 +32,10 @@ class MovieRepository @Inject constructor(
 
     suspend fun getSuggestedMovies():List<MovieDetails> {
         return movieDao.getSuggestedMovieDetails()
+    }
+
+    suspend fun searchMovies(query: String): List<MovieEntity> {
+        return movieDao.searchMovies("%$query%")
     }
 
     fun isFavourite(movieId: Int):Boolean{

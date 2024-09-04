@@ -39,6 +39,9 @@ interface MovieDao {
     @Query("SELECT isFavorite FROM movieentity WHERE movie_id = :movieId")
     fun isFavourite(movieId: Int):Boolean //Get wishlist Boolean value
 
+    @Query("SELECT * FROM movieentity WHERE original_title LIKE :query")
+    suspend fun searchMovies(query: String): List<MovieEntity> //Search Movie by String from Room DB
+
     @Query("""
         SELECT movieentity.*, 
                wishlistentity.movieId AS wishlistId

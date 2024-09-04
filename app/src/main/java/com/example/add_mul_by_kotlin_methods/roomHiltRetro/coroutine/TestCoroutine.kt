@@ -3,6 +3,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -18,7 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.delay
 
 @Composable
-fun TestCoroutine(navController:NavController,viewModel: MovieViewModel = hiltViewModel()) {
+fun TestCoroutine(navController: NavController, viewModel: MovieViewModel = hiltViewModel()) {
 
     val bell1Duration = 10000L // 10 seconds
     val bell2Duration = 60000L // 1 minute
@@ -85,6 +87,7 @@ fun TestCoroutine(navController:NavController,viewModel: MovieViewModel = hiltVi
         // Stop the animation
     }
 
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -96,26 +99,60 @@ fun TestCoroutine(navController:NavController,viewModel: MovieViewModel = hiltVi
                 .fillMaxSize()
                 .weight(1f)
         ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Spacer(modifier = Modifier.height(16.dp))
-                BellIcon(
-                    animation = isAnimating1,
-                    angle = angle,
-                    onClick = { isAnimating1 = !isAnimating1 })
+                Column(
+                    modifier = Modifier.fillMaxSize().weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BellIcon(
+                        animation = isAnimating1,
+                        angle = angle,
+                        onClick = { isAnimating1 = !isAnimating1 })
+                    Text(
+                        "10Sec",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(16.dp))
-                BellIcon(
-                    animation = isAnimating2,
-                    angle = angle,
-                    onClick = { isAnimating2 = !isAnimating2 })
-                BellIcon(
-                    animation = isAnimating3,
-                    angle = angle,
-                    onClick = { isAnimating3 = !isAnimating3 })
+                Column(
+                    modifier = Modifier.fillMaxSize().weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BellIcon(
+                        animation = isAnimating2,
+                        angle = angle,
+                        onClick = { isAnimating2 = !isAnimating2 })
+                    Text(
+                        "1mnt",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+                Column(
+                    modifier = Modifier.fillMaxSize().weight(1f),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BellIcon(
+                        animation = isAnimating3,
+                        angle = angle,
+                        onClick = { isAnimating3 = !isAnimating3 })
+                    Text(
+                        "5mnt",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
@@ -123,7 +160,7 @@ fun TestCoroutine(navController:NavController,viewModel: MovieViewModel = hiltVi
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .weight(1f)
+                .weight(3f)
         ) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
@@ -137,7 +174,7 @@ fun TestCoroutine(navController:NavController,viewModel: MovieViewModel = hiltVi
                         goToMovieDetail = {
                             println("MovieListId:--${it}")
                             navController.navigate("single_movie/${it}")
-                                          },
+                        },
                         isFavClick = {}
                     )
                 }
