@@ -30,7 +30,8 @@ import com.example.add_mul_by_kotlin_methods.roomHiltRetro.domain.Cast
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Cast(
-    images: List<Cast>
+    images: List<Cast>,
+    modifier: Modifier = Modifier,
 ) {
     Column {
         Text(

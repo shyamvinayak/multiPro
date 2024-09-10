@@ -31,7 +31,6 @@ import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.MovieDet
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.MovieScreen
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.WishListScreen
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationGraph() {
     val navController = rememberNavController()

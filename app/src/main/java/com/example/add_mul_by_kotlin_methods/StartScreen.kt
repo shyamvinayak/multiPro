@@ -1,11 +1,13 @@
 package com.example.add_mul_by_kotlin_methods
 
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

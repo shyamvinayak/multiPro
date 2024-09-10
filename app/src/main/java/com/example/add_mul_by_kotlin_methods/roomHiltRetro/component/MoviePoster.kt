@@ -1,6 +1,7 @@
 package com.example.add_mul_by_kotlin_methods.roomHiltRetro.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -23,6 +24,7 @@ import coil.request.ImageRequest
 import com.example.add_mul_by_kotlin_methods.R
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation.FavoriteButton
 
+/*
 @Composable
 fun MoviePoster (
     imagePath: String,
@@ -38,20 +40,6 @@ fun MoviePoster (
     ) {
         Box (modifier = Modifier
             .fillMaxSize()){
-           /* Image(
-                painter = rememberAsyncImagePainter(
-                    ImageRequest.Builder(LocalContext.current)
-                        .data(imagePath)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            crossfade(true)
-                        }).build()
-                ),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxSize()
-            )*/
-
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(imagePath)
@@ -72,5 +60,30 @@ fun MoviePoster (
                 FavoriteButton(modifier = Modifier.padding(8.dp), onClick = {onClick(it)})
             }
         }
+    }
+}*/
+@Composable
+fun MoviePoster(
+    imagePath: String,
+    size: Dp,
+    modifier: Modifier = Modifier,
+    onClick: (Boolean) -> Unit
+) {
+    Card(
+        shape = RoundedCornerShape(24.dp),
+        border = BorderStroke(0.5.dp, Color.Gray),
+        modifier = modifier
+            .height(size)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(imagePath)
+                .crossfade(true)
+                .build(),
+            placeholder = painterResource(R.drawable.placeholder),
+            contentDescription = "movie poster",
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }

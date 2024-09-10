@@ -17,7 +17,7 @@ fun LazyVerticalGridMovies(
     list: LazyPagingItems<Movie>,
     modifier: Modifier = Modifier,
     state: LazyGridState = rememberLazyGridState(),
-    contentPaddingValues: PaddingValues = PaddingValues(vertical = 75.dp),
+    contentPaddingValues: PaddingValues = PaddingValues(0.dp),
     itemClicked: (it: Int) -> Unit,
     isFavClick: (Int, Boolean) -> Unit
 ) {
