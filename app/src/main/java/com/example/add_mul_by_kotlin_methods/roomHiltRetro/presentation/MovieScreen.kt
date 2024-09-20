@@ -57,7 +57,7 @@ import com.example.add_mul_by_kotlin_methods.ui.theme.text
 import kotlinx.coroutines.NonDisposableHandle.parent
 
 
-//Not completed SearchBar ,I refer in this website for implementing Search bar :-https://rhythamnegi.com/material-3-search-bar-in-jetpack-compose-android-example
+//Not completed SearchBar ,I refer in this website for implementing Search bar :-https://github.com/carlosgub/JetCoMovie-App-/blob/main/app/src/main/java/com/example/moviejetpackcompose/ui/features/movie/MovieScreen.kt
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

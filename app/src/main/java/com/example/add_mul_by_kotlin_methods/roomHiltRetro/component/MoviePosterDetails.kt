@@ -28,7 +28,7 @@ fun MoviePosterDetail(
                 .build(),
             placeholder = painterResource(R.drawable.placeholder),
             contentDescription = "movie poster",
-            contentScale = ContentScale.FillWidth,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
                 .constrainAs(poster) {
@@ -40,7 +40,7 @@ fun MoviePosterDetail(
                 }
         )
         BlackVerticalGradient(
-            size = 300.dp,
+            size = 180.dp,
             startColor = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.constrainAs(gradient) {
                 bottom.linkTo(parent.bottom)

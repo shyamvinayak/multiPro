@@ -24,19 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.annotation.ExperimentalCoilApi
-import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.BlackVerticalGradient
-import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.Cast
+import androidx.navigation.NavController
+import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.CloseMovie
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.MoviePosterDetail
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.MovieTextContent
-import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.Overview
-import com.example.add_mul_by_kotlin_methods.roomHiltRetro.component.Poster
-import com.example.add_mul_by_kotlin_methods.roomHiltRetro.domain.MovieDetails
-import com.example.add_mul_by_kotlin_methods.ui.theme.backgroundNight
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
-fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewModel()) {
+fun MovieDetailsScreen(navController: NavController,movieId: String, viewModel: MovieViewModel = hiltViewModel()) {
 
     println("MovieId:---$movieId")
 
@@ -48,48 +42,6 @@ fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewMode
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
 
-    /*Box(modifier = Modifier.fillMaxSize()) {
-        val listState = rememberLazyListState()
-
-        LazyColumn(
-            state = listState,
-            contentPadding = PaddingValues(top = 16.dp, bottom = 24.dp),
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
-                .fillMaxSize()
-        )
-        {
-
-              items(movieDetails.count()){
-                  movieDetails[it].let {movie->
-                      Poster(
-                          imageUrl = movie.poster_path,
-                          screenHeight = screenHeight,
-                          runtime = 24,
-                          releaseDate = "${viewModel.extractYear(movie.release_date)}",
-                          voteAverage = movie.vote_average
-                      )
-                      HorizontalDivider(
-                          modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                          thickness = 1.dp
-                      )
-                      Overview(overview = movie.overview)
-                      HorizontalDivider(
-                          modifier = Modifier
-                              .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-                          thickness = 1.dp
-                      )
-                      Cast(images = movie.casts)
-
-                  }
-
-              }
-
-        }
-
-
-
-    }*/
     movieDetails.forEach {
         ConstraintLayout(
             modifier = Modifier
@@ -98,7 +50,7 @@ fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewMode
                 .background(MaterialTheme.colorScheme.surface) //backgroundNight
         ) {
 
-            val (poster, textContent) = createRefs()
+            val (poster, close,textContent) = createRefs()
             MoviePosterDetail(path = it.poster_path,
                 modifier = Modifier.constrainAs(poster) {
                     top.linkTo(parent.top)
@@ -107,6 +59,14 @@ fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewMode
                         end = parent.end
                     )
                 })
+
+            CloseMovie(
+                navController = navController,
+                modifier = Modifier.constrainAs(close) {
+                    top.linkTo(parent.top, 24.dp)
+                    start.linkTo(parent.start, 24.dp)
+                }
+            )
 
             MovieTextContent(
                 movie = it,
@@ -126,7 +86,6 @@ fun MovieDetailsScreen(movieId: String, viewModel: MovieViewModel = hiltViewMode
                         height = Dimension.wrapContent
                     }
             )
-
 
 
 

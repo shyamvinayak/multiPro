@@ -217,7 +217,7 @@ fun NavigationGraph() {
         ) { backStackEntry ->
             val movieId = backStackEntry.arguments?.getString("movieId")
             println("MovieIdFromApi:---$movieId")
-            MovieDetailsScreen("$movieId")
+            MovieDetailsScreen(navController,"$movieId")
         }
 
         composable(Screens.BasicCal.route,

@@ -34,14 +34,14 @@ private val LightColorPalette = lightColorScheme(
 
 @Composable
 fun MariAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
-    val colors = if (darkTheme) {
+    /*val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
-    }
+    }*/
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = DarkColorPalette /*colors*/,
         typography = Typography,
         shapes = Shapes,
         content = content
