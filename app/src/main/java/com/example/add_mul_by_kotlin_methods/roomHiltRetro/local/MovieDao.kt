@@ -25,7 +25,7 @@ interface MovieDao {
     suspend fun clearAll() //Delete Movie from Room
 
     @Query("SELECT * FROM movieentity WHERE movie_id =:movieId ")
-    suspend fun loadSingleMovie(movieId:Int):List<MovieEntity> //Select Single Movie by movie_Id
+    suspend fun loadSingleMovie(movieId:Int):List<MovieDetails> //Select Single Movie by movie_Id
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addToWishList(wishlistEntity: WishlistEntity):Long  //add movie to WishList
@@ -46,21 +46,11 @@ interface MovieDao {
         SELECT movieentity.*, 
                wishlistentity.movieId AS wishlistId
          FROM movieentity
-         LEFT JOIN wishlistentity ON movieentity.movie_id = wishlistentity.movieId 
+         LEFT JOIN wishlistentity ON movieentity.movie_id = wishlistentity.movieId
         WHERE wishlistentity.movieId IS NOT NULL
         """)
     suspend fun getWishlist():List<MovieDetails>// get WishList Movies
 
-    /*@Query("""
-        SELECT m.*
-        FROM movieentity m
-        WHERE EXISTS (
-         SELECT 1
-            FROM wishlistentity w
-            INNER JOIN castentity c ON m.movie_id = c.movieId
-            LEFT JOIN voteentity v ON m.movie_id = v.movieId
-        )
-    """)*/
 
     @Query("""
         SELECT m.*

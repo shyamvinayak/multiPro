@@ -1,5 +1,8 @@
 package com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
@@ -37,8 +40,8 @@ class MovieViewModel @Inject constructor(
     private val repository: MovieRepository,
 ) : ViewModel() {
 
-    private val _movieDetails = MutableStateFlow<List<MovieEntity>>(emptyList())
-    val movieDetails: StateFlow<List<MovieEntity>> get() = _movieDetails
+    private val _movieDetails = MutableStateFlow<List<MovieDetails>>(emptyList())
+    val movieDetails: StateFlow<List<MovieDetails>> get() = _movieDetails
 
     private val _wishlistStatus = mutableStateOf<Map<Int, Boolean>>(emptyMap())
     val wishlistStatus: State<Map<Int, Boolean>> get() = _wishlistStatus
@@ -59,6 +62,7 @@ class MovieViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _currentMovie.value = repository.getAllMoviesNoPagination()
+            _wishlistDetails.value = repository.getWishlistDetails()
         }
     }
 
@@ -79,24 +83,33 @@ class MovieViewModel @Inject constructor(
 
     }
 
-    fun addToWishList(movieId: Int, isFav: Boolean, isClicked: Boolean) {
+    fun addToWishList(movieId: Int, isFav: Boolean ) {
         viewModelScope.launch {
-            if (isClicked) {
-                repository.addToWishList(WishlistEntity(movieId = movieId, isFavorite = isFav))
-                _wishlistStatus.value =
-                    _wishlistStatus.value.toMutableMap().apply { put(movieId, isFav) }
+            if (isFav) {
+                val existingItem = repository.getWishListItem(movieId)
+                if(existingItem == null){
+                    repository.addToWishList(WishlistEntity(movieId = movieId, isFavorite = isFav))
+                    println("Added Movie to Wishlist: $movieId")
+                    loadWishlistDetails() // Refresh the wishlist after adding
+                   /* _wishlistStatus.value =
+                        _wishlistStatus.value.toMutableMap().apply { put(movieId, isFav) }*/
+                }else{
+                    println("Movie is already in the wishlist: $movieId")
+                }
 
             }
-            loadWishlistDetails()
+            /*loadWishlistDetails()*/
+            println("Sizes Of WishList:--${wishlistStatus.value.size}")
         }
     }
 
     fun loadWishlistDetails() {
         viewModelScope.launch {
             _wishlistDetails.value = repository.getWishlistDetails()
-            _wishlistStatus.value =
-                _wishlistDetails.value.associateBy({ it.movie.movie_id }, { true })
+            /*_wishlistStatus.value =
+                _wishlistDetails.value.associateBy({ it.movieId }, {it.isFavorite})*/
         }
+        println("Sizes Of LoadData: ${_wishlistDetails.value.size}")
     }
 
     fun removeWishList(movieId: Int) {
@@ -152,6 +165,14 @@ class MovieViewModel @Inject constructor(
                 _currentMovie.value = repository.getAllMoviesNoPagination()
             }
         }
+
+    fun openYoutube(context: Context, movie: MovieDetails ) {
+        val query = "${Uri.encode(movie.movie.original_title)} ${Uri.encode("${extractYear(movie.movie.release_date)}")}"
+        val queryUrl = "https://www.youtube.com/results?search_query=$query&hl=${movie.movie.original_language} Trailer"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(queryUrl))
+        context.startActivity(intent)
+    }
+
 
 
 }

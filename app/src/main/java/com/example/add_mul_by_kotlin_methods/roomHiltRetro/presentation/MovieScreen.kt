@@ -69,7 +69,7 @@ fun MovieScreen(
     val searchMovies = viewModel.searchDetails.collectAsState()
     val searchQuery = remember { mutableStateOf("") }
     val context = LocalContext.current
-    val wishlistStatus by viewModel.wishlistStatus
+    val wishlistStatus by viewModel.wishlistDetails
     var searchHistory = remember { mutableStateListOf("") }
     val active = remember { mutableStateOf(false) }
 
@@ -92,7 +92,8 @@ fun MovieScreen(
         } else {
             Column(modifier = Modifier.fillMaxSize()) {
                 MovieTopBar(title = "Movies", icon = Icons.Filled.Favorite, onClick = {
-//                    naveController.navigate(Screens.Coroutines.route)
+                    viewModel.loadWishlistDetails()
+                    println("Size of Wishlist from MovieScreen:--${wishlistStatus.size}")
                     if (wishlistStatus.isNotEmpty()) {
                         naveController.navigate(Screens.WishList.route)
                     } else {
@@ -151,7 +152,6 @@ fun MovieScreen(
                         viewModel.addToWishList(
                             id,
                             isFav = true,
-                            isClicked = true
                         )
                     } else {
                         viewModel.removeWishList(id)

@@ -150,6 +150,7 @@ dependencies {
     implementation(libs.androidx.room.common.jvm)
     implementation(libs.androidx.animation.graphics.android)
     implementation(libs.androidx.media3.effect)
+    implementation(libs.firebase.firestore.ktx)
     kapt(libs.hilt.android.compiler)
 
     //Room

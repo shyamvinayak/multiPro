@@ -14,7 +14,7 @@ class MovieRepository @Inject constructor(
         val rowId = movieDao.addToWishList(wishlistEntity)
         return rowId > 0
     }
-    suspend fun getMovieDetails(movieId: Int): List<MovieEntity> {
+    suspend fun getMovieDetails(movieId: Int): List<MovieDetails> {
         return movieDao.loadSingleMovie(movieId)
     }
 
@@ -28,6 +28,10 @@ class MovieRepository @Inject constructor(
 
     suspend fun getWishlistDetails(): List<MovieDetails> {
         return movieDao.getWishlist()
+    }
+
+    suspend fun getWishListItem(movieId: Int):WishlistEntity?{
+        return  movieDao.isMovieInWishlist(movieId)
     }
 
     suspend fun getSuggestedMovies():List<MovieDetails> {

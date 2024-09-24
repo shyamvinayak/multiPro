@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.add_mul_by_kotlin_methods.roomHiltRetro.domain.MovieDetails
 import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.MovieEntity
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -20,12 +21,12 @@ import java.util.Locale
 
 @Composable
 fun MovieTitle(
-    movie: MovieEntity,
+    movie: MovieDetails,
     modifier: Modifier = Modifier,
     textAlign: TextAlign? = null
 ) {
     Text(
-        text = movie.original_title,
+        text = movie.movie.original_title,
         style = MaterialTheme.typography.headlineMedium,
         color = MaterialTheme.colorScheme.onBackground,
         textAlign = textAlign,

@@ -11,7 +11,7 @@ import com.example.add_mul_by_kotlin_methods.roomHiltRetro.local.Entity.Wishlist
 
 @Database(
     entities = [MovieEntity::class, WishlistEntity::class, CastEntity::class, VoteEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 @TypeConverters(CastXTypeConverter::class)
