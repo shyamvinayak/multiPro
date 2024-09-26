@@ -188,6 +188,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //imageSlider
+    implementation(libs.coil.compose.v230)
+
 
 }
 kapt {
