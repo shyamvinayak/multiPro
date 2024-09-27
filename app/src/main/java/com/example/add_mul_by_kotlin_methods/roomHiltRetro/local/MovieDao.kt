@@ -61,6 +61,11 @@ interface MovieDao {
             LEFT JOIN castentity c ON m.movie_id = c.movieId
             LEFT JOIN voteentity v ON m.movie_id = v.movieId
         )
+         AND NOT EXISTS (
+        SELECT 1
+        FROM wishlistentity w2
+        WHERE w2.movieId = m.movie_id
+    )
     """
 
     )

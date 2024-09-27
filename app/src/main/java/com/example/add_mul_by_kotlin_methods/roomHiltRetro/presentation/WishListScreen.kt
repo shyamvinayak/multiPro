@@ -4,6 +4,7 @@ package com.example.add_mul_by_kotlin_methods.roomHiltRetro.presentation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,8 +23,14 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +43,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -51,6 +59,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Scale
 import com.example.add_mul_by_kotlin_methods.R
+import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 /*https://www.c-sharpcorner.com/article/swipeable-image-slider-in-jetpack-compose*/
@@ -62,6 +71,11 @@ fun WishListScreen(
     viewModel: MovieViewModel = hiltViewModel(),
     imageCornerRadius: Dp = 16.dp,
     imageHeight: Dp = 250.dp,
+    backwardIcon: ImageVector = Icons.Default.KeyboardArrowLeft,
+    forwardIcon: ImageVector = Icons.Default.KeyboardArrowRight,
+    dotsActiveColor: Color = Color.DarkGray,
+    dotsInActiveColor: Color = Color.LightGray,
+    dotsSize: Dp = 10.dp,
     pagerPaddingValues: PaddingValues = PaddingValues(horizontal = 65.dp),
 ) {
 
@@ -98,6 +112,15 @@ fun WishListScreen(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
+
+           /* IconButton(enabled = wishlistPagerState.canScrollBackward, onClick = {
+                scope.launch {
+                    wishlistPagerState.animateScrollToPage(wishlistPagerState.currentPage - 1)
+                }
+            }) {
+                Icon(imageVector = backwardIcon, contentDescription = "back")
+            }*/
+
             HorizontalPager(
                 pageSize = PageSize.Fill,
                 state = wishlistPagerState,
@@ -118,7 +141,7 @@ fun WishListScreen(
                         scaleFactor.coerceIn(0f, 1f)
                     )
                     .padding(10.dp)
-                    .clip(RoundedCornerShape(imageCornerRadius))) {
+                    .clip(RoundedCornerShape(imageCornerRadius))){
 
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current).scale(Scale.FILL)
@@ -129,12 +152,44 @@ fun WishListScreen(
                         placeholder = painterResource(id = R.drawable.placeholder),
                         modifier = Modifier
                             .height(imageHeight)
-                            .alpha(if (wishlistPagerState.currentPage == page) 1f else 0.5f)
+//                            .alpha(if (wishlistPagerState.currentPage == page) 1f else 0.5f)
+                            .clickable {
+                                navController.navigate("single_movie/${wishlistDetails[page].movie.movie_id}")
+                                viewModel.clearSearchResults()
+                            }
                     )
 
                 }
             }
+
+           /* IconButton(enabled = wishlistPagerState.currentPage != wishlistDetails.size - 1, onClick = {
+                scope.launch {
+                    wishlistPagerState.animateScrollToPage(wishlistPagerState.currentPage + 1)
+                }
+            }) {
+                Icon(imageVector = forwardIcon, contentDescription = "forward")
+            }*/
         }
+
+        /*Row(
+            Modifier
+                .height(50.dp)
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
+        ) {
+            repeat(wishlistDetails.size) {
+                val color = if (wishlistPagerState.currentPage == it) dotsActiveColor else dotsInActiveColor
+                Box(modifier = Modifier
+                    .padding(2.dp)
+                    .clip(CircleShape)
+                    .size(dotsSize)
+                    .background(color)
+                    .clickable {
+                        scope.launch {
+                            wishlistPagerState.animateScrollToPage(it)
+                        }
+                    })
+            }
+        }*/
 
         Text(
             "Suggested for you",
@@ -173,7 +228,7 @@ fun WishListScreen(
                         scaleFactor.coerceIn(0f, 1f)
                     )
                     .padding(10.dp)
-                    .clip(RoundedCornerShape(imageCornerRadius))) {
+                    .clip(RoundedCornerShape(imageCornerRadius))){
                     AsyncImage(
                         model = ImageRequest.Builder(LocalContext.current).scale(Scale.FILL)
                             .crossfade(true).data(movies[page].movie.poster_path).build(),
@@ -182,7 +237,10 @@ fun WishListScreen(
                         placeholder = painterResource(id = R.drawable.placeholder),
                         modifier = Modifier
                             .height(imageHeight)
-                            .alpha(if (moviePagerState.currentPage == page) 1f else 0.5f)
+                            .alpha(if (moviePagerState.currentPage == page) 1f else 0.5f).clickable {
+                                navController.navigate("single_movie/${movies[page].movie.movie_id}")
+                                viewModel.clearSearchResults()
+                            }
                     )
                 }
             }
